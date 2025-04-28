@@ -6,7 +6,7 @@ export const MenuContainer = styled.div`
     justify-content: center;
     gap: 20px;
     background-color: #000;
-    padding: 10px 40px;
+    padding: 30px 40px;
     width: 100%;
     color:#FFF;
 
