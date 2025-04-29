@@ -1,4 +1,11 @@
 {
+  "include": [
+    "src",
+    "env.d.ts", // Definições de variáveis de ambiente
+    "src/preload/index.d.ts",
+    "electron.vite.config.*",
+    "src/types" // Tipos personalizados
+  ],
   "files": [],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }

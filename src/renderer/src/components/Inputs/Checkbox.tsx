@@ -61,8 +61,8 @@ const customCheckbox = css`
   input:checked + &::after {
     content: '✔';
     position: absolute;
-    top: 0;
-    left: 4px;
+    top: -2px;
+    left: 3px;
     font-size: 14px;
     color: white;
   }
