@@ -1,10 +1,19 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import mysql from 'mysql2/promise';
+import { TyInsertResumo } from '../Types/InsertResumo';
+import { Tarefa } from '../Types/ResumoData';
 
 // Custom APIs for renderer
 const api = {
-  selectRevisao: async (): Promise<any> => {
+  selectRevisao: async (): Promise<Tarefa[]> => {
     return await ipcRenderer.invoke('selectRevisao');
+  },
+  insertRevisao: async (data: TyInsertResumo): Promise<mysql.QueryResult> => {
+    return await ipcRenderer.invoke('criarRevisao', data);
+  },
+  updateRevisao: async (data: Tarefa): Promise<mysql.QueryResult> => {
+    return await ipcRenderer.invoke('updateRevisao', data);
   },
 }
 

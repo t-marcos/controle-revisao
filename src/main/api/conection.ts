@@ -14,9 +14,10 @@ async function criarConexao() {
 }
 
 // Função genérica para executar qualquer query (SELECT, INSERT, UPDATE, DELETE)
-export async function executarQuery(query: string, params = []) {
+export async function executarQuery(query: string, params: any = []) {
   const conexao = await criarConexao();
   console.log('******************************** Conexao realizada com sucesso ! ******************************************')
+  
   try {
     const [resultados] = await conexao.execute(query, params);
     return resultados;

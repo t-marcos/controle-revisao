@@ -2,15 +2,22 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { ConcluirTarefa } from '../Buttons/CocluirTarefa';
-import { Tarefa } from '@renderer/Types/ResumoData';
+import { Tarefa } from '../../../../Types/ResumoData';
+import { Inbox } from 'lucide-react';
+import { useState } from 'react';
+
 
 interface Props{
     data: Tarefa[],
-    handleClick: (id: number) => void 
+    handleClick: (row: Tarefa) => void 
 }
-export const Tarefas = ({ data, handleClick }: Props) => (
-  <TableWrapper data-name >
-    <StyledTable data-name>
+
+export const Tarefas = ({ data, handleClick }: Props) => {
+
+
+  return (
+    <TableWrapper data-name >
+    <StyledTable data-name >
       <thead>
         <tr>
           <th>Status</th>
@@ -22,22 +29,31 @@ export const Tarefas = ({ data, handleClick }: Props) => (
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
-          <tr key={item.id}>
-            <td data-name>
-                <ConcluirTarefa status={item.status} id={item.id} handleClick={handleClick}/>
-            </td>
-            <td data-name>{item.materia}</td>
-            <td data-name>{item.aula}</td>
-            <td data-name>{item.dias7}</td>
-            <td data-name>{item.dias15}</td>
-            <td data-name>{item.mensal}</td>
-          </tr>
-        ))}
-      </tbody>
+  {data.length > 0 ? data.map((item) => (
+    <tr key={item.id}>
+      <td><ConcluirTarefa status={item.status} row={item} handleClick={handleClick}/></td>
+      <td>{item.materia}</td>
+      <td>{item.aula}</td>
+      <td style={{background: item.n_revisao === 0 ? '#ff6666' : ''}} >{item.dias7}</td>
+      <td style={{background: item.n_revisao === 1 ? '#ff6666' : ''}} >{item.dias15}</td>
+      <td style={{background: item.n_revisao >= 2 ? '#ff6666' : ''}}>{item.mensal}</td>
+    </tr>
+  )) : (
+    <tr>
+      <td colSpan={6}>
+        <EmptyState>
+          <Inbox />
+          <p>Nenhuma Revisão Para Hoje.</p>
+        </EmptyState>
+      </td>
+    </tr>
+  )}
+</tbody>
+
     </StyledTable>
   </TableWrapper>
-);
+  )
+};
 
 const TableWrapper = styled.div`
   overflow-x: auto;
@@ -76,6 +92,8 @@ const StyledTable = styled.table`
   td {
     border-top: 1px solid #ddd;
     font-size: 1.2rem;
+    font-weight:700;
+    color: #424242;
   }
 
   :is(th, td):is(:nth-of-type(1), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6)) {
@@ -86,3 +104,23 @@ const StyledTable = styled.table`
     text-overflow: ellipsis;
   }
 `;
+
+const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999;
+  padding: 40px 0;
+
+  svg {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+`;
+

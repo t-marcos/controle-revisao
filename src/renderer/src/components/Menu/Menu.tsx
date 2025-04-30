@@ -2,6 +2,7 @@ import { MenuContainer } from "./MenuContainer"
 import add from '../../assets/add.svg'
 import { Input } from "../Inputs/Input"
 import { useState } from "react"
+import { createTarefa } from "../../services/serviceTarefa"
 
 
 interface Props {
@@ -10,17 +11,23 @@ interface Props {
 
 export const Menu = ({handleAlert}: Props)=>{
     const [data, setData] = useState({Disciplina: '', Conteudo:'', dataInicio: ''})
-    const [dataInicio, setDataInicio] = useState('')
+    const [dataInicio, setDataInicio] = useState('');
 
 
     function handleValor(valor: {key:string, value: string}){
         setData({...data, [valor.key]: valor.value, dataInicio: dataInicio })
     }
 
-    function handleSubmit (){
+    function handleSubmit (e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
+        e.preventDefault()
+
         if (data.Conteudo !== '' && data.Disciplina !== '' && dataInicio !== ''){
-            handleAlert('A Tarefa foi salva com sucesso!', true);
-            console.log(data.dataInicio)
+            createTarefa(data).then(task => {
+                console.log(task);
+                handleAlert('A Tarefa foi salva com sucesso!', true);
+            }).catch(err =>{
+                console.log(err)
+            })
         }else{
             handleAlert('Nao foi possível criar a tarefa!', false);
         }
@@ -33,10 +40,13 @@ export const Menu = ({handleAlert}: Props)=>{
                 <Input props={conteudo} handleValue={handleValor}/>
                 <label className="data">
                     Data Inicio
-                    <input value={dataInicio} onChange={(e)=> setDataInicio(e.currentTarget.value)} type="date" />
+                    <input value={dataInicio} onChange={(e)=> {
+                        setDataInicio(e.currentTarget.value)
+                        setData({...data, dataInicio: e.currentTarget.value})
+                    }} type="date" required/>
                 </label>
             </div>
-            <button onClick={handleSubmit}>
+            <button onClick={(e) => handleSubmit(e)}>
                 <img src={add} alt="" />
                 Criar
             </button>

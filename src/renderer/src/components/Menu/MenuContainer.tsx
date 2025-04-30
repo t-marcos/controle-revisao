@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 
-export const MenuContainer = styled.div`
+export const MenuContainer = styled.form`
     display: flex;
     align-items: end;
     justify-content: space-evenly;

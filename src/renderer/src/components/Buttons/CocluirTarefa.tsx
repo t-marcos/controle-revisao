@@ -1,27 +1,33 @@
 import styled from "@emotion/styled"
+import { useEffect, useState } from "react"
+import { Tarefa } from "~/src/Types/ResumoData"
 
 
 interface Props {
-    id: number,
+    row: Tarefa,
     status: 'p' | 'f' | 'a'
-    handleClick: (id: number) => void
+    handleClick: (row: Tarefa) => void
 }
 
-export const ConcluirTarefa = ({id, status, handleClick}: Props) => {
+export const ConcluirTarefa = ({row, status, handleClick}: Props) => {
+    const [alterColor, setAlterColor] = useState(status);
 
-    const bg = status === 'f' ? '#00cc00' : '#cc0000'
-    const cl = status === 'f' ? '#e6ffe6' : '#ffe6e6'
-    const hover = status === 'f' ? '#008300' : '#8d0101'
+    const bg = alterColor === 'f' ? '#00cc00' : '#cc0000'
+    const cl = alterColor === 'f' ? '#e6ffe6' : '#ffe6e6'
+    const hover = alterColor === 'f' ? '#008300' : '#8d0101'
 
 
     return (
         <StyledBtn 
-            bgColor={status === 'p'? null : bg } 
-            fColor={status === 'p'? null : cl} 
-            hover={status === 'p'? null : hover} 
-            onClick={()=> handleClick(id)}
+            bgColor={alterColor === 'p'? null : bg } 
+            fColor={alterColor === 'p'? null : cl} 
+            hover={alterColor === 'p'? null : hover} 
+            onClick={()=> {
+                handleClick(row)
+                setAlterColor('f')
+            }}
         >
-            {status === 'p'? 'Pendente' : status === 'f'? 'Feito' : 'Atrazado'}
+            {alterColor === 'p'? 'Pendente' : alterColor === 'f'? 'Feito' : 'Atrazado'}
         </StyledBtn>
     )
 }
@@ -34,13 +40,15 @@ interface StyleProps{
 }
 
 const StyledBtn = styled.button<StyleProps>`
-    padding: 4px 9px;
+    padding: 6px 9px;
     border-radius: 12px;
     cursor: pointer;
     border: none;
     background-color: ${({bgColor})=> bgColor ? bgColor : "#4e5765"};
     color: ${({fColor})=> fColor ? fColor : "#e2e5e9"};
     width: 100%;
+    font-weight: 600;
+    letter-spacing: 0.05rem; 
 
     :hover{
         background-color: ${({hover})=> hover ? hover : "#373e48"};

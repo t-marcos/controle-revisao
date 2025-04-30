@@ -1,11 +1,41 @@
 {
-  "include": [
-    "src",
-    "env.d.ts", // Definições de variáveis de ambiente
-    "src/preload/index.d.ts",
-    "electron.vite.config.*",
-    "src/types" // Tipos personalizados
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "module": "ESNext", // Necessário para `import.meta`
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "jsx": "react-jsx",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "@/*": ["./src/*"],
+    }
+  },
+	  "include": [
+		"src",
+		"env.d.ts", // Definições de variáveis de ambiente
+		"src/preload/index.d.ts",
+		"electron.vite.config.*",
+		"src/types" // Tipos personalizados
+	  ],
+  "exclude": [
+    "node_modules"
   ],
-  "files": [],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }
