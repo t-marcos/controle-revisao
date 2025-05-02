@@ -15,7 +15,7 @@ import { Tarefa } from '~/src/Types/ResumoData'
 // executarQuery('UPDATE usuarios SET nome = ? WHERE id = ?', ['João da Silva', 1]);
 
 ipcMain.handle('criarRevisao', async (event, data: TyInsertResumo) => {
-  const query = `INSERT INTO revisao (id, materia, aula, dias7, dias15, mensal, revisao, status, data_inicio) VALUE (?,?,?,?,?,?,?,?,?)`
+  const query = `INSERT INTO revisao (id, materia, aula, dias7, dias15, mensal, n_revisao, status, data_inicio) VALUE (?,?,?,?,?,?,?,?,?)`
   const valores = dataTransformed(data)
 
   return await executarQuery(query, valores)
@@ -37,8 +37,9 @@ ipcMain.handle('updateRevisao', async (event, data: Tarefa) => {
   const hoje = new Date().toLocaleDateString()
   const numero = (await executarQuery(
     `SELECT n_revisao FROM revisao WHERE id = ${data.id}`
-  )) as Tarefa[] 
+  )) as Tarefa[]
   const query = `UPDATE revisao SET n_revisao = ? WHERE id = ?`
+
   if (numero[0].n_revisao === data.n_revisao) {
     return await executarQuery(query, [data.id, numero[0].n_revisao + 1])
   }
