@@ -16,8 +16,12 @@ export const Tarefas = ({ data, handleClick }: Props) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    console.log(data)
     if (data.length === 0) {
       setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+      }, 4000)
     } else {
       setLoading(false)
     }

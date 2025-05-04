@@ -1,8 +1,9 @@
 import { TyInsertResumo } from '~/src/Types/InsertResumo'
 
-;('materia, aula, dias7, dias15, mensal, revisao, status, data_inicio')
-
+// dataTransformed: transforma os dados do resumo para o formato desejado
 export const dataTransformed = (data: TyInsertResumo) => {
+  console.log(data)
+  console.log(adicionaDias(data.dataInicio, 7))
   return [
     null,
     data.Disciplina.toUpperCase(),
@@ -16,10 +17,21 @@ export const dataTransformed = (data: TyInsertResumo) => {
   ]
 }
 
+// adicionaDias: soma um número de dias à data (yyyy-mm-dd) com precisão
 export function adicionaDias(data: string, dias: number) {
-  const newData = new Date(data)
-  newData.setDate(newData.getDate() + dias)
-  const dt = newData.toLocaleDateString().split('/')
+  // Divide a data no formato yyyy-mm-dd
+  const [ano, mes, dia] = data.split('-').map(Number)
 
-  return `${dt[2]}-${dt[1]}-${dt[0]}`
+  // Cria a data corretamente no fuso local (sem confusão de horário)
+  const baseDate = new Date(ano, mes - 1, dia)
+
+  // Soma os dias
+  baseDate.setDate(baseDate.getDate() + dias)
+
+  // Formata para yyyy-mm-dd
+  const novoAno = baseDate.getFullYear()
+  const novoMes = String(baseDate.getMonth() + 1).padStart(2, '0')
+  const novoDia = String(baseDate.getDate()).padStart(2, '0')
+
+  return `${novoAno}-${novoMes}-${novoDia}`
 }
