@@ -54,7 +54,7 @@ export const Layout = () => {
         console.log(err)
       })
       .finally(() => {
-        startLoading()
+        stopLoading()
       })
   }
 

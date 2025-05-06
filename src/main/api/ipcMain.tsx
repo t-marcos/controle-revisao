@@ -41,6 +41,6 @@ ipcMain.handle('updateRevisao', async (event, data: Tarefa) => {
   const query = `UPDATE revisao SET n_revisao = ? WHERE id = ?`
 
   if (numero[0].n_revisao === data.n_revisao) {
-    return await executarQuery(query, [data.id, numero[0].n_revisao + 1])
+    return await executarQuery(query, [numero[0].n_revisao + 1, data.id])
   }
 })
