@@ -6,7 +6,8 @@ async function criarConexao() {
     host: import.meta.env.MAIN_VITE_DB_HOST,
     user: import.meta.env.MAIN_VITE_DB_USER,
     password: import.meta.env.MAIN_VITE_DB_PASSWORD,
-    database: import.meta.env.MAIN_VITE_DB_NAME
+    database: import.meta.env.MAIN_VITE_DB_NAME,
+    port: 3306 // <- aqui está o ajuste
   })
   return conexao
 }
@@ -14,9 +15,7 @@ async function criarConexao() {
 // Função genérica para executar qualquer query (SELECT, INSERT, UPDATE, DELETE)
 export async function executarQuery(query: string, params: any = []) {
   const conexao = await criarConexao()
-  console.log(
-    '******************************** Conexao realizada com sucesso ! ******************************************'
-  )
+  console.log('Conexão com o banco realizada com sucesso.')
 
   try {
     const [resultados] = await conexao.execute(query, params)

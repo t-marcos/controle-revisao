@@ -3,8 +3,29 @@
   "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": {
+    "name": "Marcos Roberto",
+    "email": "marcos.j.o.r@hotmail.com.com"
+  },
   "homepage": "https://electron-vite.org",
+  "build": {
+    "appId": "com.seuapp.controle-revisao",
+    "productName": "Controle-Revisao",
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon": "resources/icon.png",
+      "executableName": "controle-revisao",
+      "desktop": {
+        "Name": "Controle de Revisão",
+        "Comment": "Aplicativo para gerenciar revisões de estudo",
+        "Terminal": false
+      }
+    }
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
